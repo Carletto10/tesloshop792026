@@ -1,0 +1,29 @@
+<div class="puzzle-card">
+  <h2>Drag and drop the words</h2>
+  <p>Place each word in the correct order from the code block below.</p>
+
+  <div class="code-block">
+    <code>{{ codeExample }}</code>
+  </div>
+
+  <div class="drop-zone-list">
+    <div class="drop-slot" *ngFor="let expected of expectedOrder; let i = index" (dragover)="allowDrop($event)" (drop)="onDrop(i)">
+      <span class="slot-number">{{ i + 1 }}</span>
+      <span class="slot-label">{{ droppedItems[i]?.label || 'Drop here' }}</span>
+      <span class="marker">{{ feedback[i] }}</span>
+    </div>
+  </div>
+
+  <div class="word-bank">
+    <button type="button" class="word-chip" *ngFor="let item of shuffledItems" draggable="true" (dragstart)="dragItem(item)">
+      {{ item.label }}
+    </button>
+  </div>
+
+  <div class="status" [class.success]="isComplete">
+    <p *ngIf="!isComplete">Drop every word in the right position.</p>
+    <p *ngIf="isComplete">All words are in the correct order!</p>
+  </div>
+
+  <button type="button" class="reset-btn" (click)="resetPuzzle()">Shuffle again</button>
+</div>
